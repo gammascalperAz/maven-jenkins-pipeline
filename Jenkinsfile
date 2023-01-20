@@ -27,7 +27,7 @@ pipeline {
                               -Dsonar.projectKey=maven-jenkins-pipeline \
                         -Dsonar.host.url=http://34.241.228.157:9000" 
                 }
-           timeout(time: 30, unit: 'MINUTES') {
+           timeout(time: 2, unit: 'MINUTES') {
                       script {
                         waitForQualityGate abortPipeline: true
                     }
