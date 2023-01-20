@@ -1,1 +1,1 @@
-# maven-jenkins-pipelines
+# maven-jenkins-pipeline
