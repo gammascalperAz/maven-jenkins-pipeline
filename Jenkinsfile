@@ -3,7 +3,6 @@ pipeline {
   tools {
         maven "Maven 3.8.6" 
    }
-
   stages {
       stage('Build Artifact') {
             steps {
@@ -11,7 +10,7 @@ pipeline {
               archive 'target/*.jar' 
             }  
        }
-      stage('Test Maven - JUnit') {
+       stage('Test Maven - JUnit') {
             steps {
               sh "mvn test"
             }
@@ -24,9 +23,16 @@ pipeline {
         stage('Sonarqube Analysis - SAST') {
             steps {
                   withSonarQubeEnv('SonarQube') {
-               sh "mvn sonar:sonar \
-                                    -Dsonar.projectKey=maven-jenkins-pipeline \
-                            -Dsonar.host.url=http://34.241.228.157:9000" 
+           sh "mvn sonar:sonar \
+                              -Dsonar.projectKey=maven-jenkins-pipeline \
+                        -Dsonar.host.url=http://34.241.228.157:9000" 
+                }
+           timeout(time: 2, unit: 'MINUTES') {
+                      script {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
+              }
         }
      }
 }
