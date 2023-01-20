@@ -22,5 +22,14 @@ pipeline {
             }
         }
         
+
+      stage('Sonarqube Analysis - SAST') {
+            steps {
+                  withSonarQubeEnv('SonarQube') {
+               sh "mvn sonar:sonar \
+                   -Dsonar.projectKey=maven-jenkins-pipeline \
+                   -Dsonar.host.url=http://34.241.228.157:9000 \
+                   -Dsonar.login=b4fad6597032a4a649f611712aadea01c69e1f27
+        }
      }
 }
